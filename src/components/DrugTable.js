@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
 import {withStyles} from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -34,10 +33,6 @@ const styles = (theme) => ({
     height: '100%',
     padding: 0,
     margin: 0,
-    // display: -webkit-box ,
-    // display: -moz-box ,
-    // display: -ms-flexbox ,
-    // display: -webkit-flex ,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -80,37 +75,43 @@ const SimpleTable = ({term, classes}) => {
   };
 
   return (
-    <TableContainer component={Paper} className={classes.flexContainer}>
-      <Table
-        className={`${classes.table} ${classes.flexItem}`}
-        aria-label="simple table"
-      >
-        <TableHead>
-          <TableRow hover className={classes.tableRow}>
-            <TableCell className={classes.tableCell}>Term</TableCell>
-            <TableCell className={classes.tableCell} align="right">
-              Count
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {drugs.map((row) => (
-            <TableRow key={row.term} hover className={classes.tableRow}>
-              <TableCell
-                className={classes.tableCell}
-                component="th"
-                scope="row"
-              >
-                {row.term}
-              </TableCell>
-              <TableCell className={classes.tableCell} align="right">
-                {row.count}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <div>
+      {drugs && drugs.length > 0 && (
+        <TableContainer component={Paper} className={classes.flexContainer}>
+          <Table
+            className={`${classes.table} ${classes.flexItem}`}
+            aria-label="simple table"
+          >
+            <TableHead>
+              <TableRow hover className={classes.tableRow}>
+                <TableCell className={classes.tableCell}>Term</TableCell>
+                <TableCell className={classes.tableCell} align="right">
+                  Count
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {drugs.map((row) => (
+                <TableRow key={row.term} hover className={classes.tableRow}>
+                  <TableCell
+                    className={classes.tableCell}
+                    component="th"
+                    scope="row"
+                  >
+                    {row.term}
+                  </TableCell>
+                  <TableCell className={classes.tableCell} align="right">
+                    {row.count}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
+
+      {!drugs || (drugs && drugs.length === 0 && <div>No Data</div>)}
+    </div>
   );
 };
 
