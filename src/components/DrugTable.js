@@ -8,8 +8,14 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import axios from 'axios';
+import NoData from '../layout/notFound404.jpg';
+import Loading from '../layout/loading.gif';
+import Spinner from './spinner/Spinner';
 
 const styles = (theme) => ({
+  noData: {
+    paddingTop: '10px',
+  },
   table: {
     minWidth: 650,
     width: '50%',
@@ -53,6 +59,7 @@ const styles = (theme) => ({
 
 const SimpleTable = ({term, classes}) => {
   const [drugs, setDrugs] = useState([]);
+  const [fetching, setFetching] = useState(false);
   useEffect(() => {
     async function fetchData() {
       await fetchDrugs();
@@ -61,6 +68,7 @@ const SimpleTable = ({term, classes}) => {
   }, [term]);
 
   const fetchDrugs = async () => {
+    setFetching(true);
     const res = await axios.get('https://localhost:44344/api/fda', {
       params: {
         reaction: term,
@@ -72,11 +80,12 @@ const SimpleTable = ({term, classes}) => {
     } else {
       setDrugs([]);
     }
+    setFetching(false);
   };
 
   return (
     <div>
-      {drugs && drugs.length > 0 && (
+      {drugs && drugs.length > 0 && !fetching && (
         <TableContainer component={Paper} className={classes.flexContainer}>
           <Table
             className={`${classes.table} ${classes.flexItem}`}
@@ -110,7 +119,17 @@ const SimpleTable = ({term, classes}) => {
         </TableContainer>
       )}
 
-      {!drugs || (drugs && drugs.length === 0 && <div>No Data</div>)}
+      {!drugs ||
+        (drugs && drugs.length === 0 && !fetching && (
+          <div className={classes.noData}>
+            <div>
+              {' '}
+              <img src={NoData} alt="No Data" width="60%" height="60%" />
+            </div>
+          </div>
+        ))}
+
+      {fetching && <Spinner />}
     </div>
   );
 };
