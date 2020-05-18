@@ -45,7 +45,7 @@ const Search = ({updateTerm}) => {
         InputProps={{
           endAdornment: (
             <InputAdornment>
-              <IconButton>
+              <IconButton onClick={onClick}>
                 <SearchIcon>search</SearchIcon>
               </IconButton>
             </InputAdornment>

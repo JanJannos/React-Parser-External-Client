@@ -9,7 +9,6 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import axios from 'axios';
 import NoData from '../layout/notFound404.jpg';
-import Loading from '../layout/loading.gif';
 import Spinner from './spinner/Spinner';
 
 const styles = (theme) => ({
