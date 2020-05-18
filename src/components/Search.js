@@ -8,6 +8,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    paddingTop: '15px',
     flexGrow: 1,
   },
   button: {
@@ -20,6 +21,12 @@ const Search = ({updateTerm}) => {
 
   const classes = useStyles();
 
+  const onKeyDown = (e) => {
+    if (e.keyCode === 13) {
+      onClick();
+    }
+  };
+
   const onClick = () => {
     updateTerm(label);
   };
@@ -29,11 +36,11 @@ const Search = ({updateTerm}) => {
   };
 
   return (
-    <div>
+    <div className={classes.root}>
       <TextField
-        className={classes.root}
         onChange={(e) => changeLabel(e)}
         label={label}
+        onKeyDown={onKeyDown}
         variant="outlined"
         InputProps={{
           endAdornment: (
